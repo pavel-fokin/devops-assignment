@@ -1,0 +1,21 @@
+version: 2.1
+orbs:
+  codecov: codecov/codecov@1.0.5
+jobs:
+ test:
+   docker:
+     - image: circleci/python:3.7.4
+   steps:
+     - checkout
+     - run: sudo pip install -r requirements/prod.txt
+     - run: sudo pip install -r requirements/dev.txt
+     - run: make lint
+     - run: make tests
+     - codecov/upload:
+       file: 'coverage.xml'
+
+workflows:
+  version: 2
+  test:
+    jobs:
+      - test
