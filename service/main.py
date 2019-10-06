@@ -3,13 +3,17 @@ import logging
 from fastapi import FastAPI
 from starlette.responses import Response
 
-from . import api, solver
+from . import __version__, api, solver
 
 
 log = logging.getLogger(__name__)   # pylint: disable=invalid-name
 
 
-app = FastAPI()  # pylint: disable=invalid-name
+app = FastAPI(  # pylint: disable=invalid-name
+    title='DevOps Assignment',
+    description='Find minimal number of devops to maintain given servers.',
+    version=__version__,
+)
 app.include_router(api.router)
 
 
