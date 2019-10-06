@@ -5,9 +5,12 @@
 #    pip-compile --output-file=requirements/prod.txt requirements/prod.in
 #
 click==7.0                # via uvicorn
+dnspython==1.16.0         # via email-validator
+email-validator==1.0.4
 fastapi==0.40.0
 h11==0.8.1                # via uvicorn
 httptools==0.0.13         # via uvicorn
+idna==2.8                 # via email-validator
 pulp==1.6.10
 pydantic==0.32.2          # via fastapi
 pyparsing==2.4.2          # via pulp

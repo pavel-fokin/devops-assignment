@@ -1,8 +1,10 @@
 # pylint: disable=redefined-outer-name
+import asynctest
 import pytest
 from starlette.testclient import TestClient
 
 from service.main import app
+from service import assignment
 
 
 @pytest.fixture
@@ -37,7 +39,50 @@ def test_assignment_validation_fail(client):
     assert resp.status_code == 422
 
 
-def test_assignment_validation_success(client):
+def test_assignment_validation_success(client, mocker):
+    solver_solve = mocker.patch(
+        'service.solver.solve',
+        new_callable=asynctest.CoroutineMock,
+        return_value={},
+    )
+
+    payload = {
+        'DM_capacity': 1,
+        'DE_capacity': 1,
+        'data_centers': [
+            {'name': 'Paris', 'servers': 9},
+            {'name': 'Stockholm', 'servers': 20},
+        ]
+    }
+    resp = client.post('/api/assignment', json=payload)
+
+    solver_solve.assert_awaited_once()
+    assert resp.status_code == 200
+
+
+def test_assignment_solve_failed(client, mocker):
+    mocker.patch(
+        'service.assignment.do',
+        return_value=assignment.Solution(),
+    )
+
+    payload = {
+        'DM_capacity': 1,
+        'DE_capacity': 1,
+        'data_centers': [
+            {'name': 'Paris', 'servers': 9},
+            {'name': 'Stockholm', 'servers': 20},
+        ]
+    }
+    resp = client.post('/api/assignment', json=payload)
+
+    assert resp.status_code == 204
+    payload = resp.json()
+    assert payload['detail'] == 'No solution'
+
+
+@pytest.mark.integration
+def test_assignment_solved(client):
     payload = {
         'DM_capacity': 1,
         'DE_capacity': 1,

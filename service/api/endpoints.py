@@ -17,6 +17,9 @@ async def post_assignment(request: AssignmentRequest):
     try:
         response = await solver.solve(request)
     except RuntimeError:
-        raise HTTPException(status_code=status.HTTP_204_NO_CONTENT)
+        raise HTTPException(
+            status_code=status.HTTP_204_NO_CONTENT,
+            detail="No solution"
+        )
     log.info(response)
     return response
