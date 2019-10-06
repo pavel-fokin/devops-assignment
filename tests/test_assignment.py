@@ -7,8 +7,8 @@ from service import assignment
 @pytest.fixture
 def problem_paris():
     return assignment.Problem(
-        dm_servers=20,
-        de_servers=8,
+        dm_capacity=20,
+        de_capacity=8,
         datacenters=(
             assignment.Datacenter(name='Paris', servers=20),
             assignment.Datacenter(name='Stockholm', servers=62),
@@ -16,12 +16,12 @@ def problem_paris():
     )
 
 
-# What if we have de_servers == 0
+# What if we have de_capacity == 0
 @pytest.fixture
 def problem_paris_failure():
     return assignment.Problem(
-        dm_servers=20,
-        de_servers=0,
+        dm_capacity=20,
+        de_capacity=0,
         datacenters=(
             assignment.Datacenter(name='Paris', servers=20),
             assignment.Datacenter(name='Stockholm', servers=62),
@@ -32,8 +32,8 @@ def problem_paris_failure():
 @pytest.fixture
 def problem_stockholm():
     return assignment.Problem(
-        dm_servers=6,
-        de_servers=10,
+        dm_capacity=6,
+        de_capacity=10,
         datacenters=(
             assignment.Datacenter(name='Paris', servers=30),
             assignment.Datacenter(name='Stockholm', servers=66),
@@ -41,12 +41,12 @@ def problem_stockholm():
     )
 
 
-# What if we have dm_servers == 0
+# What if we have dm_capacity == 0
 @pytest.fixture
 def problem_stockholm_failure():
     return assignment.Problem(
-        dm_servers=0,
-        de_servers=10,
+        dm_capacity=0,
+        de_capacity=10,
         datacenters=(
             assignment.Datacenter(name='Paris', servers=30),
             assignment.Datacenter(name='Stockholm', servers=66),
@@ -57,8 +57,8 @@ def problem_stockholm_failure():
 @pytest.fixture
 def problem_berlin():
     return assignment.Problem(
-        dm_servers=12,
-        de_servers=7,
+        dm_capacity=12,
+        de_capacity=7,
         datacenters=(
             assignment.Datacenter(name='Berlin', servers=11),
             assignment.Datacenter(name='Stockholm', servers=21),

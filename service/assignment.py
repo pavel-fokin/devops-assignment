@@ -17,12 +17,12 @@ class Datacenter:
 
 @dataclass
 class Problem:
-    dm_servers: int
-    de_servers: int
+    dm_capacity: int
+    de_capacity: int
     datacenters: tuple
 
     def __hash__(self):
-        return hash((self.dm_servers, self.de_servers, self.datacenters))
+        return hash((self.dm_capacity, self.de_capacity, self.datacenters))
 
 
 @dataclass
@@ -66,8 +66,8 @@ def do(  # pylint: disable=invalid-name
     # So we have to have equal or greater number of DevOps for all datacenters
     for datacenter in problem.datacenters:
         model += (
-            problem.dm_servers * dm_to_datacenter[datacenter.name]
-            + (problem.de_servers * number_of_de[datacenter.name])
+            problem.dm_capacity * dm_to_datacenter[datacenter.name]
+            + (problem.de_capacity * number_of_de[datacenter.name])
             >= datacenter.servers
         )
 
