@@ -8,6 +8,7 @@ help:
 	@echo '   lint              Run linters                                            '
 	@echo '   requirements      Compile files with requirements                        '
 	@echo '   tests             Run unit tests                                         '
+	@echo '   run               Run web app                                            '
 
 .PHONY: tests
 tests:
@@ -22,3 +23,7 @@ requirements:
 lint:
 	@flake8 service tests
 	@pylint --exit-zero --rcfile setup.cfg service tests
+
+.PHONY: run
+run:
+	uvicorn service.main:app
