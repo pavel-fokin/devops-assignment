@@ -1,9 +1,6 @@
 from dataclasses import dataclass
-from functools import lru_cache
 
 import pulp
-
-LRU_CACHE_SIZE = 8
 
 
 @dataclass
@@ -38,7 +35,6 @@ class Solution:
         return self.status != pulp.LpStatusOptimal
 
 
-@lru_cache(maxsize=LRU_CACHE_SIZE)
 def do(  # pylint: disable=invalid-name
         problem: Problem, debug: bool = False
 ) -> Solution:

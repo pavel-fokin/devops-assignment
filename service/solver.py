@@ -26,7 +26,6 @@ async def solve(
     loop = asyncio.get_running_loop()
     solution = await loop.run_in_executor(executor, assignment.do, problem)
 
-    print(solution)
     if solution.is_failure():
         raise RuntimeError
 
