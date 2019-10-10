@@ -46,7 +46,7 @@ def do(  # pylint: disable=invalid-name
     dm_to_datacenter = {}
     for datacenter in problem.datacenters:
         number_of_de[datacenter.name] = pulp.LpVariable(
-            f"number_of_de_{datacenter.name}", cat=pulp.LpInteger
+            f"number_of_de_{datacenter.name}", cat=pulp.LpInteger, lowBound=0
         )
         dm_to_datacenter[datacenter.name] = pulp.LpVariable(
             f"dm_to_{datacenter.name}", cat=pulp.LpBinary
